@@ -3,7 +3,7 @@
  * @Author: night
  */
 
-import { handleActions as createReducer, createActions ,handleAction} from 'redux-actions';
+import { handleActions as createReducer, createActions } from 'redux-actions';
 import { appActionType } from '../actionTypes';
 
 export const action = createActions(
@@ -16,26 +16,26 @@ const initialState: InitialState = {
     userInfo: {
         id: 1,
     },
-    lang: "en",
+    lang: "zh_CN",
     marketId: 1
 }
 const App = createReducer({
     [appActionType.SET_USER_INFO]: (state, action) => {
         return {
             ...state,
-            userInfo: action.payload as unknown as UserInfo
+            userInfo: action.payload.userInfo
         }
     },
     [appActionType.SET_LANG]: (state, action) => {
         return {
             ...state,
-            lang: action.payload as unknown as string
+            lang: action.payload.lang
         }
     },
     [appActionType.SET_MARKET_ID]: (state, action) => {
         return {
             ...state,
-            marketId: action.payload as unknown as number
+            marketId: action.payload.marketId
         }
     },
 }, initialState, {

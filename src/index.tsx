@@ -4,16 +4,18 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "./assets/svg-icon/index";//引入svg
 import './index.css';
+import './assets/styles/main.less';//引入全局less
+import "./_locales/i18n"//国际化
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import { Provider } from 'react-redux';
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+        <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
