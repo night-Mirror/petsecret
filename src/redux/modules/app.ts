@@ -5,20 +5,20 @@
 
 import { handleActions as createReducer, createActions } from 'redux-actions';
 import { appActionType } from '../actionTypes';
-
 export const action = createActions(
     `app_${appActionType.SET_LANG}`,
     `app_${appActionType.SET_MARKET_ID}`,
     `app_${appActionType.SET_USER_INFO}`,
 )
 
-const initialState: InitialState = {
+const initialState: Redux.InitialState = {
     userInfo: {
         id: 1,
     },
     lang: "zh_CN",
     marketId: 1
-}
+};
+
 const App = createReducer({
     [appActionType.SET_USER_INFO]: (state, action) => {
         return {

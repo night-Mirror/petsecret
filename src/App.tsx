@@ -11,9 +11,11 @@ import { DatePicker } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import ja_JP from 'antd/lib/locale/ja_JP';
 import en_US from 'antd/lib/locale/en_US';
+import { antd } from './utils/globals';
 function App() {
-  const lang = useSelector((store: Store) => store.app.lang)
+  const lang = useSelector((store: Redux.Store) => store.app.lang)
   const [locale, setLocale] = useState(zh_CN)
+
   useEffect(() => {
     switch (lang) {
       case 'zh_CN':
@@ -30,7 +32,8 @@ function App() {
         break;
     }
   }, [lang])
-  function onChange<T, U>(date: T, dateString: U) {
+  const onChange: antd.DatePickerProps["onChange"] = (date, dateString) => {
+    console.log(date?.weekday)
     console.log(date, dateString);
   }
   return (
