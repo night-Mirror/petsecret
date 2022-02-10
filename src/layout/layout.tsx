@@ -4,6 +4,8 @@
  */
 import actions from "../redux/actions"
 import { useDispatch, useSelector } from "react-redux"
+import { Link, Outlet } from "react-router-dom"
+
 export default function Layout() {
     const userInfo = useSelector((store: Redux.Store) => store.app.userInfo)
     const dispatch = useDispatch()
@@ -17,9 +19,9 @@ export default function Layout() {
         ))
     }
     return (
-        <div onClick={add}>
-            id
-            {userInfo.id}
+        <div >
+            Layout
+            <Outlet />
         </div>
     )
 }

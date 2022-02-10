@@ -2,20 +2,19 @@
  * @LastEditors: night
  * @Author: night
  */
-import React, { useEffect, useState } from 'react';
-import Layout from './layout/layout';
-import ImgCard from './components/imgCard/imgCard';
+import { useEffect, useState, } from 'react';
+import { useRoutes } from "react-router-dom";
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
-import { DatePicker } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import ja_JP from 'antd/lib/locale/ja_JP';
 import en_US from 'antd/lib/locale/en_US';
-import { antd } from './utils/globals';
+import { routes, } from './route';
+import transformRoutes from './route/router';
 function App() {
   const lang = useSelector((store: Redux.Store) => store.app.lang)
   const [locale, setLocale] = useState(zh_CN)
-
+  const elements = useRoutes(transformRoutes(routes))
   useEffect(() => {
     switch (lang) {
       case 'zh_CN':
@@ -32,33 +31,10 @@ function App() {
         break;
     }
   }, [lang])
-  const onChange: antd.DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date?.weekday)
-    console.log(date, dateString);
-  }
   return (
     <ConfigProvider locale={locale}>
-      <div className="App">
-        <Layout></Layout>
-        <ImgCard />
-        <header className="App-header">
-
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        <DatePicker onChange={onChange} />
-      </div>
+      {elements}
     </ConfigProvider>
   );
 }
-
 export default App;

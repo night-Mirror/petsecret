@@ -5,7 +5,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import { message } from 'antd';
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 import { getQueryObject } from "@/utils";
 import md5 from 'md5';
 import qs from 'qs'

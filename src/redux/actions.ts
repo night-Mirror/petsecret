@@ -4,8 +4,9 @@
  * @Author: night
  */
 const modulesFiles = require.context('./modules', false, /\.ts$/)
-let actions: Actions = {}
+let actions = {}
 modulesFiles.keys().map(modulePath => {
+
     const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
     if (!moduleName.startsWith("redux")) {
         const value = modulesFiles(modulePath)
@@ -13,6 +14,7 @@ modulesFiles.keys().map(modulePath => {
         actions = { ...actions, ...actionsType }
     }
     return false
+
 })
-export default actions
+export default actions as Actions
 

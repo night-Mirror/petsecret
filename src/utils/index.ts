@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-19 17:47:30
- * @LastEditTime: 2022-01-11 15:59:14
+ * @LastEditTime: 2022-02-10 18:40:21
  * @LastEditors: night
  * @Description: In User Settings Edit
  * @FilePath: \sellersprite\src\utils\index.js
@@ -36,7 +36,7 @@ export function parseTime(time: number | string, cFormat: string, nation?: strin
     if ((typeof time === 'number') && (time.toString().length === 10)) {
       time = time * 1000
     }
-    if (nation && nation == "en") {
+    if (nation && nation === "en") {
       let h = (new Date(time).getMonth() + 1) > 6 ? 16 : 15
       date = new Date(time as number - h * 1000 * 3600)
     } else {
@@ -266,7 +266,7 @@ export function getTime(type: string) {
  */
 export function deepClone(source: { [x: string]: any; constructor?: any }) {
   if (!source && typeof source !== 'object') {
-    throw new Error('error arguments' + 'deepClone')
+    throw new Error('error arguments deepClone')
   }
   const targetObj = source.constructor === Array ? [] : {}
   Object.keys(source).forEach(keys => {
@@ -338,17 +338,17 @@ export const transformI18N = function (...i18n: any[]) {
 export function language() {
   let langList = ["cn", "en", "jp"]
   let lock = window.location.pathname.split("/")[1]
-  if (lock != 'v3') {
-    if (langList.some(item => item == lock)) {
+  if (lock !== 'v3') {
+    if (langList.some(item => item === lock)) {
       return lock
     }
   }
   let lang: string = Cookies.get("ecookie") || ""
-  if (lang && langList.some(item => item == lang.substr(-2).toLowerCase())) {
+  if (lang && langList.some(item => item === lang.substr(-2).toLowerCase())) {
     return lang.substr(-2).toLowerCase()
   }
   let type = navigator.appName;
-  if (type == "Netscape") {
+  if (type === "Netscape") {
     lang = navigator.language;
   }
   else {
@@ -357,11 +357,11 @@ export function language() {
   //取得浏览器语言的前两个字母
   lang = lang.substr(0, 2);
   // 中文 - 不分繁体和简体
-  if (lang == "zh") {
+  if (lang === "zh") {
     return "cn"
   }
   //日语
-  else if (lang == "jp") {
+  else if (lang === "jp") {
     return "jp"
   }
   // 除上面所列的语言
@@ -369,27 +369,27 @@ export function language() {
     return "en"
   }
 }
-/**
- * @description: 是否包含asin
- * @param {*} url
- * @return {*}
- */
-export function fIsAtListingPage(url: string) {
-  return url && fGetWebsite(url).indexOf('www.amazon.') >= 0 && /\/(dp|product)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url);
-}
-export function fGetWebsite(url: string) {
-  let match = url.match(/(?:http(?:s)?:\/\/)?(?:www\.)?(.*?)(\.[-\w]+)+/);
-  return match ? match[0] : '';
-}
-/**
- * @description: 返回asin
- * @param {*} url
- * @return {*}
- */
-export function fGetAsin(url: string) {
-  if (/(product[-reviews]?)|(dp)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url)) {
-    let match = url.match(/\/([A-Z0-9]{8,15})(([\/|\b|\s|\\?]+)|($))/i);
-    return match ? match[1].toUpperCase() : null;
-  }
-  return null;
-}
+// /**
+//  * @description: 是否包含asin
+//  * @param {*} url
+//  * @return {*}
+//  */
+// export function fIsAtListingPage(url: string) {
+//   return url && fGetWebsite(url).indexOf('www.amazon.') >= 0 && /\/(dp|product)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url);
+// }
+// export function fGetWebsite(url: string) {
+//   let match = url.match(/(?:http(?:s)?:\/\/)?(?:www\.)?(.*?)(\.[-\w]+)+/);
+//   return match ? match[0] : '';
+// }
+// /**
+//  * @description: 返回asin
+//  * @param {*} url
+//  * @return {*}
+//  */
+// export function fGetAsin(url: string) {
+//   if (/(product[-reviews]?)|(dp)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url)) {
+//     let match = url.match(/\/([A-Z0-9]{8,15})(([\/|\b|\s|\\?]+)|($))/i);
+//     return match ? match[1].toUpperCase() : null;
+//   }
+//   return null;
+// }
