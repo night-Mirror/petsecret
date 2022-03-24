@@ -1,32 +1,26 @@
 /*
+ * @Description: 全局变量
  * @LastEditors: night
  * @Author: night
  */
-
+import { language } from '@/utils';
+import Cookies from 'js-cookie';
 import { handleActions as createReducer, createActions } from 'redux-actions';
 import { appActionType } from '../actionTypes';
+
 export const action = createActions(
     `app_${appActionType.SET_LANG}`,
     `app_${appActionType.SET_MARKET_ID}`,
-    `app_${appActionType.SET_USER_INFO}`,
 )
 
 const initialState: Redux.InitialState = {
-    userInfo: {
-        id: 1,
-    },
-    lang: "zh_CN",
+    lang: language(),
     marketId: 1
 };
 
 const App = createReducer({
-    [appActionType.SET_USER_INFO]: (state, action) => {
-        return {
-            ...state,
-            userInfo: action.payload.userInfo
-        }
-    },
     [appActionType.SET_LANG]: (state, action) => {
+        Cookies.set("lang", action.payload.lang)
         return {
             ...state,
             lang: action.payload.lang

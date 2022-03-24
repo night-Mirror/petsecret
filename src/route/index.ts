@@ -14,14 +14,14 @@ const routes: RouteItem[] = [
 
     {
         path: '/login',
-        component: () => import('@/page/login/login'),
+        component: () => import('@/page/login/Login'),
         meta: {
             title: '登录',
         },
         children: [
             {
-                path: ':test',
-                component: () => import('@/page/login/login'),
+                path: 'test',
+                component: () => import('@/page/login/Login'),
             }
         ],
     },

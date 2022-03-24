@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-19 17:47:30
- * @LastEditTime: 2022-02-10 18:40:21
+ * @LastEditTime: 2022-02-11 14:31:06
  * @LastEditors: night
  * @Description: In User Settings Edit
  * @FilePath: \sellersprite\src\utils\index.js
@@ -337,13 +337,7 @@ export const transformI18N = function (...i18n: any[]) {
  */
 export function language() {
   let langList = ["cn", "en", "jp"]
-  let lock = window.location.pathname.split("/")[1]
-  if (lock !== 'v3') {
-    if (langList.some(item => item === lock)) {
-      return lock
-    }
-  }
-  let lang: string = Cookies.get("ecookie") || ""
+  let lang: string = Cookies.get("lang") || ""
   if (lang && langList.some(item => item === lang.substr(-2).toLowerCase())) {
     return lang.substr(-2).toLowerCase()
   }

@@ -16,12 +16,16 @@ declare global {
             id: number
         }
         interface InitialState {
-            userInfo: UserInfo,
             lang: string
             marketId: number,
         }
+        interface User {
+            userInfo: {},
+            token: string | undefined
+        }
         interface Store {
-            app: InitialState
+            app: InitialState,
+            user:User
         }
     }
     type moment = Moment
@@ -30,13 +34,18 @@ declare global {
         fill?: string
     }
     interface Actions {
-        appSetUserInfo: Function
+        appSetUserInfo: Function,
+        appRemoveUserInfo: Function,
         [propName: string]: any
     }
     interface RouteItem extends RouteObject {
         key?: string,
         redirect?: string,
-        meta?: object,
+        meta?: {
+            title?: string,
+            needLogin?: boolean,
+            [propName: string]: any
+        },
         component?: any
         children?: RouteItem[] | RouteObject[]
 

@@ -6,7 +6,7 @@
 const adminRoutes: RouteItem[] = [
     {
         path: '/admin',
-        component: () => import('@/page/home/home'),
+        component: () => import('@/page/home/Home'),
         meta: {
             title: '管理后台',
             needLogin: true,

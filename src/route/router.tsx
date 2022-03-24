@@ -4,7 +4,7 @@
  * @Author: night
  */
 import { ReactElement } from 'react'
-import { Navigate, useLocation ,RouteObject} from 'react-router-dom'
+import { Navigate, useLocation, RouteObject } from 'react-router-dom'
 import React from 'react'
 import { LoadingOutlined } from "@ant-design/icons"
 import NProgress from 'nprogress'
@@ -27,7 +27,12 @@ const onRouteBefore = ({ pathname, meta }: any): string | void => {
 
     // }
 }
-
+/**
+ * @description: 路由守卫包裹
+ * @param {*} param1
+ * @param {*} meta
+ * @return {*}
+ */
 function Router({ element, meta }: { element: ReactElement, meta: {} }) {
     const location = useLocation()
     const { pathname } = location
@@ -40,7 +45,7 @@ function Router({ element, meta }: { element: ReactElement, meta: {} }) {
         }
         const newPath = handleRouteBefore({ pathname, meta })
         if (newPath && newPath !== pathname) {
-            element = <Navigate to={newPath} state={{ rest: "132" }} />
+            element = <Navigate to={newPath} />
         }
     }
 
@@ -48,7 +53,13 @@ function Router({ element, meta }: { element: ReactElement, meta: {} }) {
     return element
 
 }
-// 懒加载路由
+
+/**
+ * @description: 路由懒加载包裹
+ * @param {function} importFn
+ * @param {object} meta
+ * @return {*}
+ */
 function lazyLoad(importFn: () => Promise<{ default: React.ComponentType<any>; }>, meta: object | undefined) {
     NProgress.start()
     meta = meta || {}
@@ -61,8 +72,11 @@ function lazyLoad(importFn: () => Promise<{ default: React.ComponentType<any>; }
     NProgress.done()
     return <Router element={lazyElement} meta={meta} />
 }
+
 /**
- * @description: 路由配置列表数据转换
+ * @description: 转换为react router props
+ * @param {RouteItem} routes
+ * @return {*}
  */
 function transformRoutes(routes: RouteItem[]) {
     const list: RouteObject[] = []

@@ -17,13 +17,13 @@ function App() {
   const elements = useRoutes(transformRoutes(routes))
   useEffect(() => {
     switch (lang) {
-      case 'zh_CN':
+      case 'cn':
         setLocale(zh_CN)
         break;
-      case 'ja_JP':
+      case 'jp':
         setLocale(ja_JP)
         break;
-      case 'en_US':
+      case 'en':
         setLocale(en_US)
         break;
       default:

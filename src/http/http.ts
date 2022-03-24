@@ -8,6 +8,9 @@ import NProgress from 'nprogress'
 import { getQueryObject } from "@/utils";
 import md5 from 'md5';
 import qs from 'qs'
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import actions from "@/redux/actions";
 NProgress.configure({ showSpinner: false })
 
 const paramStr = (obj: { [x: string]: any; }) => {
@@ -52,6 +55,8 @@ let request: AxiosInstance = axios.create({
     }
 })
 request.interceptors.request.use((config: AxiosRequestConfig) => {
+    let token = Cookies.get("token") || "";
+    (config.headers as AxiosRequestHeaders)["token"] = token
     NProgress.start()
     if (config.headers && config.headers["Content-Type"] == "application/x-www-form-urlencoded;charset=UTF-8") {
         config.data = qs.stringify(config.data) // 转为formdata数据格式
@@ -82,9 +87,11 @@ request.interceptors.response.use(
                 return Promise.resolve(res.data)
             } else {
                 if (res.data.code == "ERR_GLOBAL_SESSION_EXPIRED") {
-                    window.sessionStorage.clear();
-                    window.location.href = "/w/user/login?callback=" + window.location.pathname + window.location.search
-                    return Promise.reject()
+                    const dispatch = useDispatch()
+                    dispatch(actions.appSetUserInfo)
+                    Cookies.remove("token")
+                    Cookies.remove("userInfo")
+                    window.location.href = "/login"
                 } else if (res.data.code == "ERR_LOGIN_ACCOUNT_INCONSISTENT") {
                     return Promise.resolve(res.data)
                 } else {
