@@ -6,7 +6,6 @@
 const modulesFiles = require.context('./modules', false, /\.ts$/)
 let actions = {}
 modulesFiles.keys().map(modulePath => {
-
     const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
     if (!moduleName.startsWith("redux")) {
         const value = modulesFiles(modulePath)

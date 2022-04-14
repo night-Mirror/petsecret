@@ -17,12 +17,15 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename={window['__POWERED_BY_QIANKUN__'] ? '/app-react' : '/'}>
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
+  () => {
+    console.log("start")
+  }
 );
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

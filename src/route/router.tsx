@@ -3,11 +3,12 @@
  * @LastEditors: night
  * @Author: night
  */
-import { ReactElement } from 'react'
+import { ReactElement,memo } from 'react'
 import { Navigate, useLocation, RouteObject } from 'react-router-dom'
 import React from 'react'
 import { LoadingOutlined } from "@ant-design/icons"
 import NProgress from 'nprogress'
+NProgress.configure({ showSpinner: false })
 let temp: null | ReactElement = null // 用于防止重复渲染
 /**
  * @description: 全局路由拦截
@@ -21,11 +22,9 @@ const onRouteBefore = ({ pathname, meta }: any): string | void => {
         document.title = meta.title
     }
     // // 判断未登录跳转登录页
-    // if (meta.needLogin) {
-
-    //     return '/login'
-
-    // }
+    if (meta.needLogin) {
+        return '/login'
+    }
 }
 /**
  * @description: 路由守卫包裹
@@ -82,11 +81,11 @@ function transformRoutes(routes: RouteItem[]) {
     const list: RouteObject[] = []
     routes.forEach(route => {
         const obj = { ...route }
-        if (obj.redirect) {
-            obj.element = <Navigate to={obj.redirect} />
-        }
         if (obj.component) {
             obj.element = lazyLoad(obj.component, obj.meta)
+        }
+        if (obj.redirect) {
+            obj.element = <Navigate to={obj.redirect} />
         }
         delete obj.redirect
         delete obj.component

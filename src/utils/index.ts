@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-19 17:47:30
- * @LastEditTime: 2022-02-11 14:31:06
+ * @LastEditTime: 2022-04-01 09:54:56
  * @LastEditors: night
  * @Description: In User Settings Edit
  * @FilePath: \sellersprite\src\utils\index.js
@@ -363,27 +363,3 @@ export function language() {
     return "en"
   }
 }
-// /**
-//  * @description: 是否包含asin
-//  * @param {*} url
-//  * @return {*}
-//  */
-// export function fIsAtListingPage(url: string) {
-//   return url && fGetWebsite(url).indexOf('www.amazon.') >= 0 && /\/(dp|product)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url);
-// }
-// export function fGetWebsite(url: string) {
-//   let match = url.match(/(?:http(?:s)?:\/\/)?(?:www\.)?(.*?)(\.[-\w]+)+/);
-//   return match ? match[0] : '';
-// }
-// /**
-//  * @description: 返回asin
-//  * @param {*} url
-//  * @return {*}
-//  */
-// export function fGetAsin(url: string) {
-//   if (/(product[-reviews]?)|(dp)\/[A-Z0-9]{8,15}(([\/|\b|\s|\\?]+)|($))/i.test(url)) {
-//     let match = url.match(/\/([A-Z0-9]{8,15})(([\/|\b|\s|\\?]+)|($))/i);
-//     return match ? match[1].toUpperCase() : null;
-//   }
-//   return null;
-// }

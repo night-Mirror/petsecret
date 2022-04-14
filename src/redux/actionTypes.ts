@@ -1,4 +1,5 @@
 /*
+ * @Description: 对应模块常量声明
  * @LastEditors: night
  * @Author: night
  */

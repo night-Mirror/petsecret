@@ -5,19 +5,23 @@
  * @Author: night
  */
 
-import { useLocation, useParams,Outlet, } from "react-router"
+import { asyncAction } from "@/redux/asyncAction"
+import { useDispatch } from "react-redux"
+import { useLocation, useParams, Outlet, } from "react-router"
 import { useSearchParams } from "react-router-dom"
 
 
 export default function Login() {
-    const [params,setpPrams] = useSearchParams()
-    const Location = useLocation()
-    console.log(params.toString())
-    console.log(Location)
+    const [params, setpPrams] = useSearchParams()
+    const dispatch = useDispatch()
+    function login() {
+        console.log(1)
+        dispatch(asyncAction.login)
+    }
     return (
         <div>
             login
-            <Outlet></Outlet>
+            <button onClick={login}>登录</button>
         </div>
     )
 }

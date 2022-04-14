@@ -3,30 +3,24 @@
  * @LastEditors: night
  * @Author: night
  */
+
+import Layout from '@/layout/layout';
+import React from 'react';
 import adminRoutes from './admin';
 import appRoutes from './app';
 // 路由集合 
+// @ts-nocheck
 const routes: RouteItem[] = [
     {
-        path: '/',
-        redirect: '/index',
+        path: "/",
+        element: React.createElement(Layout),
+        children: [...appRoutes],
     },
-
+    ...adminRoutes,
     {
         path: '/login',
         component: () => import('@/page/login/Login'),
-        meta: {
-            title: '登录',
-        },
-        children: [
-            {
-                path: 'test',
-                component: () => import('@/page/login/Login'),
-            }
-        ],
     },
-    ...appRoutes,
-    ...adminRoutes,
     {
         path: '*',
         component: () => import('@/page/404'),

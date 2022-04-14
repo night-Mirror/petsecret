@@ -111,6 +111,17 @@ checkBrowsers(paths.appPath, isInteractive)
       ...createDevServerConfig(proxyConfig, urls.lanUrlForConfig),
       host: HOST,
       port,
+      proxy: {
+        "/dev": {
+          target: "https://www.sellersprite.com/",
+          changeOrigin: true,
+          ws: true,
+          pathRewrite: {
+            // 路径重写
+            "^/dev": ""
+          }
+        }
+      },
     };
     const devServer = new WebpackDevServer(serverConfig, compiler);
     // Launch WebpackDevServer.

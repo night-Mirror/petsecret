@@ -1,29 +1,24 @@
-import { useHistory } from "@/hooks/utils";
-import { Outlet, useSearchParams, useNavigate, Link } from "react-router-dom";
 
 /*
  * @LastEditors: night
  * @Author: night
  */
 
+import { useHistory } from "@/hooks/utils";
+import { useState } from "react";
+import { Outlet, useSearchParams, useNavigate, Link } from "react-router-dom";
 export default function Home() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const History = useHistory()
+    const [count, setCount] = useState(0)
     const Navigate = useNavigate()
-
     const click = () => {
-        // Navigate('/login', { state: { query: 132 } })
-        History('/login', { state: { query: 132 },query:{
-            asin:"132",
-            marketid:"&addas"
-        } })
-      
-
+        Navigate('/mine', { state: { query: 132 } })
     }
+    console.log(2)
     return (
-        <div style={{ display: "flex" }} onClick={click}>
-            home
-            <Outlet />
+        <div  >
+            <div onClick={click}> home</div>
+            {/* <Outlet /> */}
         </div>
     );
 }

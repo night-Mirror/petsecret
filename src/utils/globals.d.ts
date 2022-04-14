@@ -15,17 +15,14 @@ declare global {
         interface UserInfo {
             id: number
         }
-        interface InitialState {
+        interface App {
+            userInfo: {},
+            token: string | undefined,
             lang: string
             marketId: number,
         }
-        interface User {
-            userInfo: {},
-            token: string | undefined
-        }
         interface Store {
-            app: InitialState,
-            user:User
+            app: App,
         }
     }
     type moment = Moment
