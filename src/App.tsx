@@ -12,16 +12,17 @@ import en_US from 'antd/lib/locale/en_US';
 import { routes, } from './route';
 import transformRoutes from './route/router';
 function App() {
+  const lang = useSelector((store: Redux.Store) => store.app.lang)
+  const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
   ConfigProvider.config({
     theme: {
-      // primaryColor: '#1890ff',
+      primaryColor: primaryColor,
       // errorColor: '#ff4d4f',
       // warningColor: '#faad14',
       // successColor: '#52c41a',
       // infoColor: '#1890ff',
     },
   });
-  const lang = useSelector((store: Redux.Store) => store.app.lang)
   const [locale, setLocale] = useState(zh_CN)
   const elements = useRoutes(transformRoutes(routes))
   useEffect(() => {

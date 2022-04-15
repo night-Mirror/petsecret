@@ -20,6 +20,7 @@ declare global {
             token: string | undefined,
             lang: string
             marketId: number,
+            primaryColor:string,
         }
         interface Store {
             app: App,
@@ -33,6 +34,7 @@ declare global {
     interface Actions {
         appSetUserInfo: Function,
         appRemoveUserInfo: Function,
+        appSetPrimaryColor: Function,
         [propName: string]: any
     }
     interface RouteItem extends RouteObject {

@@ -4,12 +4,16 @@
  * @Author: night
  */
 import actions from '@/redux/actions';
-import { Menu, Dropdown,Affix, Button } from 'antd';
-import { SetStateAction, useState } from 'react';
+import { Menu, Dropdown, Affix, Button, } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SvgIcon from '../svgIcon';
 import style from "./header.module.less"
+import { useImmer } from "use-immer";
+import {
+    SettingOutlined,
+} from '@ant-design/icons';
+import { SketchPicker } from 'react-color';
 const { SubMenu } = Menu;
 const navList = [
     {
@@ -128,13 +132,15 @@ const navList = [
         ],
     },
 ]
-
 function Header(params: any) {
-    const [current, setCurrent] = useState("keyword_sprite")
+    const [data, setData] = useImmer({
+        key: 'keyword_sprite'
+    })
     const dispatch = useDispatch()
     const { t, i18n } = useTranslation();
-    function handleClick(e: { key: SetStateAction<string>; }) {
-        setCurrent(e.key);
+    const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
+    function handleClick(e: { key: string; }) {
+        setData((draft) => { draft.key = e.key });
     };
     function changeLanguage(params: { key: string | undefined; }) {
         i18n.changeLanguage(params.key)
@@ -143,6 +149,17 @@ function Header(params: any) {
                 lang: params.key
             }
         ))
+    }
+    function onColorChange(nextColor: { primaryColor: string; }) {
+        dispatch(actions.appSetPrimaryColor(
+            {
+                primaryColor: nextColor.primaryColor
+            }
+        ))
+        // setColor(mergedNextColor);
+        // ConfigProvider.config({
+        //     theme: mergedNextColor,
+        // });
     }
     const menu = (
         <Menu onClick={changeLanguage}>
@@ -163,7 +180,7 @@ function Header(params: any) {
                 <span> <SvgIcon iconClass='cn'></SvgIcon>中文</span>
             </Dropdown>
             <div className={style.menu}>
-                <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+                <Menu onClick={handleClick} selectedKeys={[data.key]} mode="horizontal">
                     {navList.map(item => {
                         return (
                             <SubMenu key={item.title} title={t(item.title)} >
@@ -180,10 +197,16 @@ function Header(params: any) {
                 </Menu>
             </div>
             <div>
-                <Button type='primary'>primary</Button> 
-                <Button type='ghost'>ghost</Button> 
-                <Button type='dashed'>dashed</Button> 
-                <Button type='default'>default</Button> 
+                <Button type='primary' icon={<SettingOutlined />}></Button>
+                <SketchPicker
+                    presetColors={['#1890ff', '#25b864', '#ff6f00']}
+                    color={primaryColor}
+                    onChange={({ hex }) => {
+                        onColorChange({
+                            primaryColor: hex,
+                        });
+                    }}
+                />
             </div>
 
         </header>
