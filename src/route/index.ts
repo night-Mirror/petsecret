@@ -4,7 +4,8 @@
  * @Author: night
  */
 
-import Layout from '@/layout/layout';
+import Layout from '@/app/layout/layout';
+import adminLayout from '@/admin/layout/layout';
 import React from 'react';
 import adminRoutes from './admin';
 import appRoutes from './app';
@@ -16,14 +17,18 @@ const routes: RouteItem[] = [
         element: React.createElement(Layout),
         children: [...appRoutes],
     },
-    ...adminRoutes,
+    {
+        path: "/admin",
+        element: React.createElement(adminLayout),
+        children: [...adminRoutes],
+    },
     {
         path: '/login',
-        component: () => import('@/page/login/Login'),
+        component: () => import('@app/login/Login'),
     },
     {
         path: '*',
-        component: () => import('@/page/404'),
+        component: () => import('@/app/page/404'),
         meta: {
             title: '404',
         },

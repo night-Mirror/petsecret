@@ -1,4 +1,3 @@
-import Meta from 'antd/lib/card/Meta'
 
 /*
  * @Description: 前台路由管理
@@ -8,8 +7,7 @@ import Meta from 'antd/lib/card/Meta'
 const appRoutes: RouteItem[] = [
     {
         index: true,
-        // path: '/index',
-        component: () => import('@/page/home/Home'),
+        component: () => import('@/app/page/home/Home'),
         meta: {
             title: '首页',
         },
@@ -17,7 +15,7 @@ const appRoutes: RouteItem[] = [
     },
     {
         path: "/mine",
-        component: () => import('@/page/mine/Mine'),
+        component: () => import('@/app/page/mine/Mine'),
         meta: {
             title: "个人中心",
             // needLogin: true

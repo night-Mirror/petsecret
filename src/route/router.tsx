@@ -85,7 +85,7 @@ function transformRoutes(routes: RouteItem[]) {
             obj.element = lazyLoad(obj.component, obj.meta)
         }
         if (obj.redirect) {
-            obj.element = <Navigate to={obj.redirect} />
+            obj.element = <Navigate to={obj.redirect}  replace={true}/>
         }
         delete obj.redirect
         delete obj.component

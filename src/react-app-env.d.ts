@@ -22,6 +22,10 @@ declare module '*.bmp' {
   const src: string;
   export default src;
 }
+declare module '*.ico' {
+  const src: string;
+  export default src;
+}
 
 declare module '*.gif' {
   const src: string;

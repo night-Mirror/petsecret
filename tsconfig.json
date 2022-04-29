@@ -24,7 +24,13 @@
     "paths": {
       "@/*": [
         "*"
-      ]
+      ],
+      "@app/*": [
+        "app/page/*"
+      ],
+      "@admin/*": [
+        "admin/page/*"
+      ],
     }
   },
   "include": [
