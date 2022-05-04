@@ -41,7 +41,6 @@ function App() {
         break;
     }
   }, [lang])
-  console.log(elements)
   return (
     <ConfigProvider locale={locale}>
       {elements}

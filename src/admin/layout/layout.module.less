@@ -21,10 +21,55 @@
 
     :global(.site-layout .site-layout-background) {
         background: #fff;
+        min-width: 780px;
+    }
+
+    :global(.handle-button) {
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        left: -48px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 6px 0 0 6px !important;
+        z-index: 0;
+        pointer-events: auto;
+        cursor: pointer;
+        color: #fff;
+        background-color: @primary-color;
+        line-height: 48px;
+    }
+
+    :global(.ant-drawer-content) {
+        overflow: visible;
+
+        :global(.ant-drawer-body p) {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    .theme {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        .sketchPicker {
+            position: absolute;
+            top: 22px;
+            z-index: 10;
+            left: 0;
+        }
+    }
+
+    .breadCrumb {
+        margin-left: 20px;
+        flex-grow: 1;
     }
 
     .header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 }

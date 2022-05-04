@@ -27,7 +27,7 @@ declare global {
         }
     }
     type moment = Moment
-    interface SvgIcon {
+    interface SvgIcon extends React.HTMLAttributes<HTMLDivElement> {
         iconClass: string,
         fill?: string
     }

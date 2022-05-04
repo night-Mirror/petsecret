@@ -6,6 +6,10 @@
 const adminRoutes: RouteItem[] = [
     {
         index: true,
+        redirect:'dashboard',
+    },
+    {
+        path: 'dashboard',
         component: () => import('@admin/dashboard/Dashboard'),
         meta: {
             title: '管理后台-首页',
@@ -33,7 +37,6 @@ const adminRoutes: RouteItem[] = [
     },
     {
         path: "permission",
-        // redirect: "page",
         component: () => import('@admin/permission/Permission'),
         meta: {
             title: '管理后台-权限测试页',
@@ -42,9 +45,11 @@ const adminRoutes: RouteItem[] = [
         },
         children: [
             {
-
-                path: "page",
                 index: true,
+                redirect: "page"
+            },
+            {
+                path: "page",
                 component: () => import('@admin/permission/Page'),
                 meta: {
                     title: '权限测试页-页面',
