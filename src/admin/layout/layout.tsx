@@ -21,6 +21,8 @@ import SvgIcon from "@/common/svgIcon"
 import adminRoutes from "@/route/admin"
 import classNames from "classnames"
 import { SketchPicker } from 'react-color';
+import Texty from 'rc-texty';
+import ErrorBoundary from "antd/lib/alert/ErrorBoundary"
 type MenuItem = Required<MenuProps>['items'][number];
 const { Header, Sider, Content } = Layout;
 function getItem(
@@ -57,7 +59,7 @@ function renderMenu(Routes: RouteItem[], rootUrl: string): MenuItem[] {
 function itemRender(route: any, params: any, routes: string | any[], paths: any[]) {
     const last = routes.indexOf(route) === routes.length - 1;
     return last ? (
-        <span>{route.breadcrumbName}</span>
+        <span> <Texty type="left" mode="smooth">{route.breadcrumbName}</Texty></span>
     ) : (
         <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
     );
@@ -156,16 +158,19 @@ function AdminLayout() {
                 <Header className={classNames("site-layout-background", style.header)} style={{ paddingLeft: 16, fontSize: 18 }}>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                         className: 'trigger',
+                        id: "hamburger-container",
                         onClick: () => setCollapsed(!collapsed),
                     })}
-                    <Breadcrumb itemRender={itemRender} routes={routes} className={style.breadCrumb} />
+                    <div id="breadcrumb-container" style={{ flex: 1 }}>
+                        <Breadcrumb itemRender={itemRender} routes={routes} className={style.breadCrumb} />
+                    </div>
                     <Space className={style.right} size={15} align="center">
                         <SvgIcon iconClass='search' style={{ fontSize: 18 }} />
                         <SvgIcon iconClass='fullscreen' style={{ fontSize: 18 }} />
                         <SvgIcon iconClass='size' style={{ fontSize: 18 }} />
                         <SvgIcon iconClass='language' style={{ fontSize: 18 }} />
-                        <Dropdown placement="bottom" arrow overlay={<Menu items={avatarMenus}></Menu>}>
-                            <Avatar icon={<img src={avatar} />} size={{ xs: 24, sm: 32, md: 40, lg: 40, xl: 40, xxl: 40 }} />
+                        <Dropdown placement="bottom" arrow overlay={<Menu items={avatarMenus}></Menu>} >
+                            <Avatar icon={<img src={avatar} />} size={{ xs: 24, sm: 32, md: 40, lg: 40, xl: 40, xxl: 40 }} style={{ cursor: "pointer" }} />
                         </Dropdown>
 
                     </Space>
@@ -178,7 +183,7 @@ function AdminLayout() {
                         minHeight: 280,
                     }}
                 >
-                    <Outlet />
+                    <ErrorBoundary> <Outlet /></ErrorBoundary>
                 </Content>
             </Layout>
             <Drawer
@@ -192,7 +197,7 @@ function AdminLayout() {
                 width="260"
 
             >
-                <p className={style.theme}>主题色 <SkinFilled style={{ color: primaryColor, cursor: "pointer", flex: 1, textAlign: "right" }} onClick={() => setColorPicker(!colorPicker)} />
+                <div className={style.theme}>主题色 <SkinFilled style={{ color: primaryColor, cursor: "pointer", flex: 1, textAlign: "right" }} onClick={() => setColorPicker(!colorPicker)} />
                     <div style={{ display: colorPicker ? 'block' : 'none' }}>
                         <SketchPicker
                             presetColors={['#1890ff', '#25b864', '#ff6f00']}
@@ -205,7 +210,7 @@ function AdminLayout() {
                             }}
                         />
                     </div>
-                </p>
+                </div>
                 <p><span>开启 Tags-View</span><Switch size="small" /></p>
                 <p><span>固定 Header</span><Switch size="small" /></p>
                 <p><span>固定 Header</span><Switch size="small" /></p>

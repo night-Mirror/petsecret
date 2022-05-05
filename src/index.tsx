@@ -8,6 +8,8 @@ import 'nprogress/nprogress.css'
 import "./assets/svg-icon/index";//引入svg
 import './index.css';
 import './assets/styles/main.less';//引入全局less
+import 'rc-texty/assets/index.css';
+import 'driver.js/dist/driver.min.css';
 import "./_locales/i18n"//国际化
 import App from './App';
 import reportWebVitals from './reportWebVitals';

@@ -95,11 +95,20 @@ const adminRoutes: RouteItem[] = [
         },
     },
     {
+        path: "error-log",
+        component: () => import('@admin/error-log/ErrorLog'),
+        meta: {
+            title: '管理后台-错误日志',
+            menu: "错误日志",
+            icon: "bug"
+        },
+    },
+    {
         path: "excel",
         component: () => import('@admin/excel/Excel'),
         meta: {
             title: '管理后台-表格',
-            menu: "表格",
+            menu: "excel",
             icon: "excel"
         },
     },
