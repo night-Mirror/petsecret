@@ -1,11 +1,8 @@
-
-/*
- * @Description: 
- * @LastEditors: night
- * @Author: night
- */
+import QueueAnim from "rc-queue-anim"
 export default function Charts() {
     return (
-        <div>Charts</div>
+        <QueueAnim >
+            <div key={1}>Charts</div>
+        </QueueAnim>
     )
 }

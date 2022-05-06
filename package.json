@@ -54,6 +54,7 @@
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
+    "rc-queue-anim": "^2.0.0",
     "rc-texty": "^0.2.0",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",

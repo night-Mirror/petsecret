@@ -7,7 +7,7 @@
 import { useEffect } from "react"
 export default function ErrorTest() {
     useEffect(() => {
-        throw new Error("this is a ErrorTest");
+        throw new Error("this is a Error Test");
 
     }, [])
     return (

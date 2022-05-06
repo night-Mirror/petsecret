@@ -1,43 +1,31 @@
 .layout {
     min-height: 100%;
 
-    :global(#components-layout-demo-custom-trigger .trigger) {
-        padding: 0 24px;
-        font-size: 18px;
-        line-height: 64px;
-        cursor: pointer;
-        transition: color 0.3s;
+    .sider {
+        position: fixed;
+        height: 100%;
     }
 
-    :global(#components-layout-demo-custom-trigger .trigger:hover) {
-        color: #1890ff;
-    }
+    .container {
+        transition: margin-left 0.28s;
 
-    :global(#components-layout-demo-custom-trigger .logo) {
-        height: 32px;
-        margin: 16px;
-        background: rgba(255, 255, 255, 0.3);
-    }
+        .layoutBackground {
+            background: #fff;
+            min-width: 780px;
+        }
 
-    :global(.site-layout .site-layout-background) {
-        background: #fff;
-        min-width: 780px;
-    }
+        .breadCrumb {
+            margin-left: 20px;
+            flex-grow: 1;
+        }
 
-    :global(.handle-button) {
-        width: 48px;
-        height: 48px;
-        position: absolute;
-        left: -48px;
-        text-align: center;
-        font-size: 24px;
-        border-radius: 6px 0 0 6px !important;
-        z-index: 0;
-        pointer-events: auto;
-        cursor: pointer;
-        color: #fff;
-        background-color: @primary-color;
-        line-height: 48px;
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
     }
 
     :global(.ant-drawer-content) {
@@ -47,29 +35,38 @@
             display: flex;
             justify-content: space-between;
         }
-    }
 
-    .theme {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: relative;
-        .sketchPicker {
+        .handleButton {
+            width: 48px;
+            height: 48px;
             position: absolute;
-            top: 22px;
-            z-index: 10;
-            left: 0;
+            left: -48px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 6px 0 0 6px !important;
+            z-index: 0;
+            pointer-events: auto;
+            cursor: pointer;
+            color: #fff;
+            background-color: @primary-color;
+            line-height: 48px;
         }
+
+        .theme {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 14px;
+
+            .sketchPicker {
+                position: absolute;
+                top: 22px;
+                z-index: 10;
+                left: 0;
+            }
+        }
+
     }
 
-    .breadCrumb {
-        margin-left: 20px;
-        flex-grow: 1;
-    }
-
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
 }

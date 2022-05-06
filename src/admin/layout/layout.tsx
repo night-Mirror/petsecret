@@ -7,8 +7,8 @@ import avatar from "@/assets/images/avatar.gif"
 import style from "./layout.module.less"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, Outlet, useLocation } from "react-router-dom"
-import { useMemo, memo, useState, useEffect } from "react"
-import { Avatar, Breadcrumb, Layout, Menu, MenuProps, Space, Dropdown, Switch, Drawer, } from 'antd';
+import { useMemo, memo, useState, } from "react"
+import { Avatar, Breadcrumb, Layout, Menu, MenuProps, Space, Dropdown, Switch, Drawer, Popover, Button } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import React from "react"
 import {
@@ -22,7 +22,7 @@ import adminRoutes from "@/route/admin"
 import classNames from "classnames"
 import { SketchPicker } from 'react-color';
 import Texty from 'rc-texty';
-import ErrorBoundary from "antd/lib/alert/ErrorBoundary"
+import ErrorBoundary from "@/common/errorBoundary/ErrorBoundary"
 type MenuItem = Required<MenuProps>['items'][number];
 const { Header, Sider, Content } = Layout;
 function getItem(
@@ -87,19 +87,30 @@ let avatarMenus: MenuItem[] = [{
 },]
 
 function AdminLayout() {
-    const { pathname } = useLocation()
+    const Location = useLocation()
+    const { pathname } = Location
     const [collapsed, setCollapsed] = useState(false)
     const [visible, setVisible] = useState(false)
-    const [colorPicker, setColorPicker] = useState(false)
     const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
+    const [color, setColor] = useState(primaryColor)
     const dispatch = useDispatch()
-    function onColorChange(nextColor: { primaryColor: string; }) {
-        dispatch(actions.appSetPrimaryColor(
-            {
-                primaryColor: nextColor.primaryColor
-            }
-        ))
-    }
+    const content = <div>
+        <SketchPicker
+            presetColors={['#1890ff', '#25b864', '#ff6f00']}
+            className={style.sketchPicker}
+            color={color}
+            onChange={({ hex }) => {
+                setColor(hex)
+            }}
+        />
+        <div><Button onClick={() => {
+            dispatch(actions.appSetPrimaryColor(
+                {
+                    primaryColor: color
+                }
+            ))
+        }}>确定</Button></div>
+    </div>
     let routes: Route[] = useMemo(() => {
         let pathnameArr = pathname.split("/").filter(i => i).slice(1)
         let Routes = adminRoutes
@@ -142,7 +153,7 @@ function AdminLayout() {
     }, [pathname])
     return (
         <Layout className={style.layout}>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider trigger={null} collapsible collapsed={collapsed} className={style.sider}>
                 {/* <div className="logo" style={{ textAlign: "center" }}>
                     <img src={favicon} alt="logo" />
                 </div> */}
@@ -154,8 +165,8 @@ function AdminLayout() {
                     items={Menus}
                 />
             </Sider>
-            <Layout className="site-layout">
-                <Header className={classNames("site-layout-background", style.header)} style={{ paddingLeft: 16, fontSize: 18 }}>
+            <Layout className={style.container} style={{ marginLeft: collapsed ? 80 : 200 }}>
+                <Header className={classNames(style.layoutBackground, style.header)} style={{ paddingLeft: 16, fontSize: 18, }}>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                         className: 'trigger',
                         id: "hamburger-container",
@@ -176,14 +187,18 @@ function AdminLayout() {
                     </Space>
                 </Header>
                 <Content
-                    className="site-layout-background"
+                    key={1}
+                    className={style.layoutBackground}
                     style={{
                         margin: '24px 16px',
                         padding: 24,
                         minHeight: 280,
                     }}
                 >
-                    <ErrorBoundary> <Outlet /></ErrorBoundary>
+
+                    <ErrorBoundary history={Location}>
+                        <Outlet></Outlet>
+                    </ErrorBoundary>
                 </Content>
             </Layout>
             <Drawer
@@ -195,29 +210,19 @@ function AdminLayout() {
                 getContainer={false}
                 forceRender
                 width="260"
-
             >
-                <div className={style.theme}>主题色 <SkinFilled style={{ color: primaryColor, cursor: "pointer", flex: 1, textAlign: "right" }} onClick={() => setColorPicker(!colorPicker)} />
-                    <div style={{ display: colorPicker ? 'block' : 'none' }}>
-                        <SketchPicker
-                            presetColors={['#1890ff', '#25b864', '#ff6f00']}
-                            className={style.sketchPicker}
-                            color={primaryColor}
-                            onChange={({ hex }) => {
-                                onColorChange({
-                                    primaryColor: hex,
-                                });
-                            }}
-                        />
-                    </div>
+                <div className={style.theme}>主题色
+                    <Popover content={content} placement="bottom" arrowContent="">
+                        <SkinFilled style={{ color: primaryColor, cursor: "pointer", }} />
+                    </Popover>
                 </div>
                 <p><span>开启 Tags-View</span><Switch size="small" /></p>
                 <p><span>固定 Header</span><Switch size="small" /></p>
                 <p><span>固定 Header</span><Switch size="small" /></p>
                 <p><span>侧边栏 Logo</span><Switch size="small" /></p>
-                <div className="handle-button" onClick={() => setVisible(!visible)}><SettingOutlined /></div>
+                <div className={style.handleButton} onClick={() => setVisible(!visible)}><SettingOutlined /></div>
             </Drawer>
-        </Layout>
+        </Layout >
 
     )
 }

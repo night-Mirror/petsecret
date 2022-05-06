@@ -3,13 +3,12 @@
  * @LastEditors: night
  * @Author: night
  */
-/*
- * @Description: 
- * @LastEditors: night
- * @Author: night
- */
+import QueueAnim from "rc-queue-anim"
 export default function Zip() {
     return (
-        <div>Zip</div>
+        <QueueAnim>
+            <div key={1}>Zip</div>
+        </QueueAnim>
+
     )
 }

@@ -3,13 +3,11 @@
  * @LastEditors: night
  * @Author: night
  */
-/*
- * @Description: 
- * @LastEditors: night
- * @Author: night
- */
+import QueueAnim from "rc-queue-anim"
 export default function Pdf() {
     return (
-        <div>Pdf</div>
+        <QueueAnim>
+            <div key={1}>Pdf</div>
+        </QueueAnim>
     )
 }

@@ -3,13 +3,11 @@
  * @LastEditors: night
  * @Author: night
  */
-/*
- * @Description: 
- * @LastEditors: night
- * @Author: night
- */
+import QueueAnim from "rc-queue-anim"
 export default function Excel() {
     return (
-        <div>excel</div>
+        <QueueAnim>
+            <div key={1}>excel</div>
+        </QueueAnim>
     )
 }

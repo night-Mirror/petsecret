@@ -3,8 +3,11 @@
  * @LastEditors: night
  * @Author: night
  */
+import QueueAnim from "rc-queue-anim"
 export default function Cipboard() {
     return (
-        <div>Cipboard</div>
+        <QueueAnim>
+            <div key={1}>Cipboard</div>
+        </QueueAnim>
     )
 }

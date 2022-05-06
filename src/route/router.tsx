@@ -3,7 +3,7 @@
  * @LastEditors: night
  * @Author: night
  */
-import { ReactElement,memo } from 'react'
+import { ReactElement, ReactNode, } from 'react'
 import { Navigate, useLocation, RouteObject } from 'react-router-dom'
 import React from 'react'
 import { LoadingOutlined } from "@ant-design/icons"
@@ -32,7 +32,7 @@ const onRouteBefore = ({ pathname, meta }: any): string | void => {
  * @param {*} meta
  * @return {*}
  */
-function Router({ element, meta }: { element: ReactElement, meta: {} }) {
+function Router({ element, meta, }: { element: ReactElement, meta: {}, }) {
     const location = useLocation()
     const { pathname } = location
     meta = meta || {}
@@ -61,11 +61,12 @@ function Router({ element, meta }: { element: ReactElement, meta: {} }) {
  */
 function lazyLoad(importFn: () => Promise<{ default: React.ComponentType<any>; }>, meta: object | undefined) {
     NProgress.start()
+    const location = useLocation()
     meta = meta || {}
     const Element = React.lazy(importFn)
     const lazyElement = (
         <React.Suspense fallback={<LoadingOutlined />}>
-            < Element _meta={meta} />
+            < Element meta={meta} history={location} />
         </React.Suspense>
     )
     NProgress.done()
@@ -85,7 +86,7 @@ function transformRoutes(routes: RouteItem[]) {
             obj.element = lazyLoad(obj.component, obj.meta)
         }
         if (obj.redirect) {
-            obj.element = <Navigate to={obj.redirect}  replace={true}/>
+            obj.element = <Navigate to={obj.redirect} replace={true} />
         }
         delete obj.redirect
         delete obj.component

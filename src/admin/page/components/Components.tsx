@@ -4,8 +4,11 @@
  * @LastEditors: night
  * @Author: night
  */
+import QueueAnim from "rc-queue-anim"
 export default function Components() {
     return (
-        <div>Components</div>
+        <QueueAnim>
+            <div key={1}>Components</div>
+        </QueueAnim>
     )
 }

@@ -13,13 +13,13 @@ const appRoutes: RouteItem[] = [
         },
 
     },
-    {
-        path: "/mine",
-        component: () => import('@/app/page/mine/Mine'),
-        meta: {
-            title: "个人中心",
-            // needLogin: true
-        }
-    }
+    // {
+    //     path: "/mine",
+    //     component: () => import('@/app/page/mine/Mine'),
+    //     meta: {
+    //         title: "个人中心",
+    //         // needLogin: true
+    //     }
+    // }
 ]
 export default appRoutes

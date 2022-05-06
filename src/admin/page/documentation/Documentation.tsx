@@ -1,13 +1,13 @@
-
-import { useEffect } from "react"
-
-
-export default function Documentation() {
-    useEffect(() => {
-        throw new Error("test");
-
-    }, [])
+/*
+ * @Description: 
+ * @LastEditors: night
+ * @Author: night
+ */
+import QueueAnim from "rc-queue-anim"
+export default function Documentation(props: any) {
     return (
-        <div>木有文档哦</div>
+        <QueueAnim>
+            <div key={1}>木有文档哦</div>
+        </QueueAnim>
     )
 }
