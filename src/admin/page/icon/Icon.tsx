@@ -18,20 +18,20 @@ const modules = svgs.keys().reduce((modules: string[], modulePath: string) => {
 }, [])
 export default function Icon() {
     return (
-        <QueueAnim>
-            <div className={style.wrap} key={1}>
-                {modules.map(item =>
-                    <span className={style.item} key={item}>
-                        <Tooltip title={'<SvgIcon iconClass="' + item + '"/>'}>
-                            <span>
-                                <SvgIcon iconClass={item} style={{ fontSize: 32, marginBottom: 10 }}></SvgIcon>
-                            </span>
-                        </Tooltip>
-                        <span>{item}</span>
-                    </span>
-                )
-                }
-            </div >
-        </QueueAnim>
+            <QueueAnim>
+                <div className={style.wrap} key={1}>
+                    {modules.map(item =>
+                        <span className={style.item} key={item}>
+                            <Tooltip title={'<SvgIcon iconClass="' + item + '"/>'}>
+                                <span>
+                                    <SvgIcon iconClass={item} style={{ fontSize: 32, marginBottom: 10 }}></SvgIcon>
+                                </span>
+                            </Tooltip>
+                            <span>{item}</span>
+                        </span>
+                    )
+                    }
+                </div >
+            </QueueAnim>
     )
 }

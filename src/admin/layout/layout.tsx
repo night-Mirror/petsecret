@@ -15,7 +15,7 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     SettingOutlined,
-    SkinFilled
+    SkinFilled,
 } from '@ant-design/icons';
 import SvgIcon from "@/common/svgIcon"
 import adminRoutes from "@/route/admin"
@@ -23,6 +23,7 @@ import classNames from "classnames"
 import { SketchPicker } from 'react-color';
 import Texty from 'rc-texty';
 import ErrorBoundary from "@/common/errorBoundary/ErrorBoundary"
+import { Scrollbars } from 'react-custom-scrollbars';
 type MenuItem = Required<MenuProps>['items'][number];
 const { Header, Sider, Content } = Layout;
 function getItem(
@@ -91,6 +92,7 @@ function AdminLayout() {
     const { pathname } = Location
     const [collapsed, setCollapsed] = useState(false)
     const [visible, setVisible] = useState(false)
+    const [poperVisible, setPoperVisible] = useState(false)
     const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
     const [color, setColor] = useState(primaryColor)
     const dispatch = useDispatch()
@@ -103,13 +105,19 @@ function AdminLayout() {
                 setColor(hex)
             }}
         />
-        <div><Button onClick={() => {
+        <span style={{
+            textAlign: 'right',
+            position: "absolute",
+            bottom: '18px',
+            right: '24px',
+        }}><Button type="primary" size="small" onClick={() => {
             dispatch(actions.appSetPrimaryColor(
                 {
                     primaryColor: color
                 }
             ))
-        }}>确定</Button></div>
+            setPoperVisible(false)
+        }}>确定</Button></span>
     </div>
     let routes: Route[] = useMemo(() => {
         let pathnameArr = pathname.split("/").filter(i => i).slice(1)
@@ -154,16 +162,18 @@ function AdminLayout() {
     return (
         <Layout className={style.layout}>
             <Sider trigger={null} collapsible collapsed={collapsed} className={style.sider}>
-                {/* <div className="logo" style={{ textAlign: "center" }}>
+                <Scrollbars>
+                    {/* <div className="logo" style={{ textAlign: "center" }}>
                     <img src={favicon} alt="logo" />
                 </div> */}
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    selectedKeys={[pathname]}
-                    defaultOpenKeys={[pathname.split("/").splice(0, pathname.split("/").length - 1).join("/")]}
-                    items={Menus}
-                />
+                    <Menu
+                        theme="dark"
+                        mode="inline"
+                        selectedKeys={[pathname]}
+                        defaultOpenKeys={[pathname.split("/").splice(0, pathname.split("/").length - 1).join("/")]}
+                        items={Menus}
+                    />
+                </Scrollbars>
             </Sider>
             <Layout className={style.container} style={{ marginLeft: collapsed ? 80 : 200 }}>
                 <Header className={classNames(style.layoutBackground, style.header)} style={{ paddingLeft: 16, fontSize: 18, }}>
@@ -183,7 +193,6 @@ function AdminLayout() {
                         <Dropdown placement="bottom" arrow overlay={<Menu items={avatarMenus}></Menu>} >
                             <Avatar icon={<img src={avatar} />} size={{ xs: 24, sm: 32, md: 40, lg: 40, xl: 40, xxl: 40 }} style={{ cursor: "pointer" }} />
                         </Dropdown>
-
                     </Space>
                 </Header>
                 <Content
@@ -195,7 +204,6 @@ function AdminLayout() {
                         minHeight: 280,
                     }}
                 >
-
                     <ErrorBoundary history={Location}>
                         <Outlet></Outlet>
                     </ErrorBoundary>
@@ -209,21 +217,20 @@ function AdminLayout() {
                 visible={visible}
                 getContainer={false}
                 forceRender
-                width="260"
+                width="280"
             >
                 <div className={style.theme}>主题色
-                    <Popover content={content} placement="bottom" arrowContent="">
-                        <SkinFilled style={{ color: primaryColor, cursor: "pointer", }} />
+                    <Popover content={content} placement="bottomLeft" trigger="click" overlayClassName="my-popover" visible={poperVisible}>
+                        <SkinFilled style={{ color: primaryColor, cursor: "pointer", }} onClick={() => setPoperVisible(true)} />
                     </Popover>
                 </div>
                 <p><span>开启 Tags-View</span><Switch size="small" /></p>
                 <p><span>固定 Header</span><Switch size="small" /></p>
-                <p><span>固定 Header</span><Switch size="small" /></p>
                 <p><span>侧边栏 Logo</span><Switch size="small" /></p>
+                <p><span>菜单支持拼音搜索</span><Switch size="small" /></p>
                 <div className={style.handleButton} onClick={() => setVisible(!visible)}><SettingOutlined /></div>
             </Drawer>
         </Layout >
-
     )
 }
 export default memo(AdminLayout)
