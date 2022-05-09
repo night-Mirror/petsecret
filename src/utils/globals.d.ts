@@ -20,10 +20,14 @@ declare global {
             token: string | undefined,
             lang: string
             marketId: number,
-            primaryColor:string,
+            primaryColor: string,
+        }
+        interface Admin {
+            historyRouter:string []
         }
         interface Store {
             app: App,
+            admin:Admin,
         }
     }
     type moment = Moment
@@ -35,6 +39,8 @@ declare global {
         appSetUserInfo: Function,
         appRemoveUserInfo: Function,
         appSetPrimaryColor: Function,
+        adminAddRouter: Function,
+        adminRemoveRouter: Function,
         [propName: string]: any
     }
     interface RouteItem extends RouteObject {
