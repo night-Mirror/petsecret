@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-19 17:47:30
- * @LastEditTime: 2022-04-01 09:54:56
+ * @LastEditTime: 2022-05-11 14:36:58
  * @LastEditors: night
  * @Description: In User Settings Edit
  * @FilePath: \sellersprite\src\utils\index.js
@@ -124,21 +124,6 @@ export function getQueryObject(url?: string | null | undefined) {
   return obj
 }
 
-/**
- * @param {string} input value
- * @returns {number} output value
- */
-export function byteLength(str: string) {
-  // returns the byte length of an utf8 string
-  let s = str.length
-  for (var i = str.length - 1; i >= 0; i--) {
-    const code = str.charCodeAt(i)
-    if (code > 0x7f && code <= 0x7ff) s++
-    else if (code > 0x7ff && code <= 0xffff) s += 2
-    if (code >= 0xDC00 && code <= 0xDFFF) i--
-  }
-  return s
-}
 
 /**
  * @param {Array} actual
@@ -191,16 +176,6 @@ export function decodeQuery(url: string) {
 }
 
 /**
- * @param {string} val
- * @returns {string}
- */
-export function html2Text(val: string) {
-  const div = document.createElement('div')
-  div.innerHTML = val
-  return div.textContent || div.innerText
-}
-
-/**
  * Merges two objects, giving the last one precedence
  * @param {Object} target
  * @param {(Object|Array)} source
@@ -224,25 +199,6 @@ export function objectMerge(target: { [x: string]: any }, source: string | any[]
   return target
 }
 
-/**
- * @param {HTMLElement} element
- * @param {string} className
- */
-export function toggleClass(element: { className: any }, className: string | any[]) {
-  if (!element || !className) {
-    return
-  }
-  let classString = element.className
-  const nameIndex = classString.indexOf(className)
-  if (nameIndex === -1) {
-    classString += '' + className
-  } else {
-    classString =
-      classString.substr(0, nameIndex) +
-      classString.substr(nameIndex + className.length)
-  }
-  element.className = classString
-}
 
 /**
  * @param {string} type
@@ -255,7 +211,6 @@ export function getTime(type: string) {
     return new Date(new Date().toDateString())
   }
 }
-
 
 /**
  * This is just a simple version of deep copy
@@ -280,57 +235,6 @@ export function deepClone(source: { [x: string]: any; constructor?: any }) {
 }
 
 /**
- * @param {Array} arr
- * @returns {Array}
- */
-export function uniqueArr(arr: Iterable<unknown> | null | undefined) {
-  return Array.from(new Set(arr))
-}
-
-
-/**
- * Check if an element has a class
- * @param {HTMLElement} elm
- * @param {string} cls
- * @returns {boolean}
- */
-export function hasClass(ele: { className: string }, cls: string) {
-  return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'))
-}
-
-/**
- * Add class to element
- * @param {HTMLElement} elm
- * @param {string} cls
- */
-export function addClass(ele: { className: string }, cls: string) {
-  if (!hasClass(ele, cls)) ele.className += ' ' + cls
-}
-
-/**
- * Remove class from element
- * @param {HTMLElement} elm
- * @param {string} cls
- */
-export function removeClass(ele: { className: string }, cls: string) {
-  if (hasClass(ele, cls)) {
-    const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)')
-    ele.className = ele.className.replace(reg, ' ')
-  }
-}
-/**
- * @description: 国际化
- * @param {array} i18n
- * @return {*}
- */
-export const transformI18N = function (...i18n: any[]) {
-  let r = {};
-  i18n.forEach(o => {
-    for (let k in o) r[k] = o[k]['message'];
-  });
-  return r;
-};
-/**
  * @description: 获取语言标识
  * @param {*}
  * @return {*}
@@ -349,7 +253,7 @@ export function language() {
     lang = (navigator as any).userLanguage;
   }
   //取得浏览器语言的前两个字母
-  lang = lang.substr(0, 2);
+  lang = lang.substring(0, 2);
   // 中文 - 不分繁体和简体
   if (lang === "zh") {
     return "cn"

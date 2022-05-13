@@ -3,9 +3,10 @@
  * @Author: night
  */
 import style from "./layout.module.less"
-import { Link, Outlet, useLocation } from "react-router-dom"
+import logo from "@/assets/images/logo.png"
+import { Link, Outlet, useLocation, useOutlet } from "react-router-dom"
 import { memo, useState, } from "react"
-import { Layout, Menu, MenuProps,  } from 'antd';
+import { Layout, Menu, MenuProps, Affix } from 'antd';
 import React from "react"
 import SvgIcon from "@/common/svgIcon"
 import adminRoutes from "@/route/admin"
@@ -14,7 +15,9 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import System from "../components/system/System"
 import AdminHeader from "../components/header/Header"
 import TagView from "../components/tagView/TagView";
-
+import { useSelector } from "react-redux";
+import KeepAlive from "@/components/keepalive/KeepAlive";
+import QueueAnim from "rc-queue-anim"
 type MenuItem = Required<MenuProps>['items'][number];
 const { Sider, Content } = Layout;
 function getItem(
@@ -51,17 +54,19 @@ function renderMenu(Routes: RouteItem[], rootUrl: string): MenuItem[] {
 let Menus = renderMenu(adminRoutes, '/admin')
 function AdminLayout() {
     const Location = useLocation()
+    const Outlet = useOutlet()
     const { pathname } = Location
     const [collapsed, setCollapsed] = useState(false)
+    const showTagsView = useSelector((store: Redux.Store) => store.admin.showTagsView)
+    const showLogo = useSelector((store: Redux.Store) => store.admin.showLogo)
+    const fixHeader = useSelector((store: Redux.Store) => store.admin.fixHeader)
     return (
         <Layout className={style.layout}>
-            
             <Sider trigger={null} collapsible collapsed={collapsed} className={style.sider}>
                 <Scrollbars>
-                  
-                    {/* <div className="logo" style={{ textAlign: "center" }}>
-                    <img src={favicon} alt="logo" />
-                </div> */}
+                    {showLogo && <div className="logo" style={{ textAlign: "center" }}>
+                        <img src={logo} alt="logo" style={{ width: 80 }} />
+                    </div>}
                     <Menu
                         theme="dark"
                         mode="inline"
@@ -72,8 +77,15 @@ function AdminLayout() {
                 </Scrollbars>
             </Sider>
             <Layout className={style.container} style={{ marginLeft: collapsed ? 80 : 200 }}>
-                <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} />
-                <TagView />
+                {fixHeader ? <Affix offsetTop={0}>
+                    <div>
+                        <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} />
+                        {showTagsView ? <TagView /> : ''}
+                    </div>
+                </Affix> : <div>
+                    <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} />
+                    {showTagsView ? <TagView /> : ''}
+                </div>}
                 <Content
                     key={1}
                     className={style.layoutBackground}
@@ -84,7 +96,9 @@ function AdminLayout() {
                     }}
                 >
                     <ErrorBoundary history={Location}>
-                        <Outlet></Outlet>
+                        <KeepAlive key={1} include={['/admin/zip', '/admin/clipboard']}>
+                            {Outlet}
+                        </KeepAlive>
                     </ErrorBoundary>
                 </Content>
             </Layout>

@@ -8,26 +8,27 @@ import { handleActions as createReducer, createActions } from 'redux-actions';
 import { adminType } from '../actionTypes';
 import produce from "immer"
 export const action = createActions(
-    `admin_${adminType.ADD_ROUTER}`,
-    `admin_${adminType.CLEAR_ROUTER}`,
-    `admin_${adminType.REMOVE_ROUTER}`,
+    `admin_${adminType.SET_TAGS_VIEW}`,
+    `admin_${adminType.SHOW_LOGO}`,
+    `admin_${adminType.FIX_HEADER}`,
 )
 
 const adminState: Redux.Admin = {
-    historyRouter: []
+    showTagsView: true,
+    showLogo: false,
+    fixHeader: false,
 };
 const admin = createReducer({
-    [adminType.ADD_ROUTER]: produce((draft, { payload }) => {
-        if ((draft.historyRouter.findIndex(item => item == payload as unknown as string))==-1) {
-            draft.historyRouter.push(payload as any)
-        }
+    [adminType.SET_TAGS_VIEW]: produce((draft, { payload: { showTagsView } }) => {
+        draft.showTagsView = showTagsView
     }),
-    [adminType.REMOVE_ROUTER]: produce((draft, { payload }) => {
-        draft.historyRouter.filter(item => item != payload as unknown as string)
+    [adminType.SHOW_LOGO]: produce((draft, { payload: { showLogo } }) => {
+        draft.showLogo = showLogo
     }),
-    [adminType.CLEAR_ROUTER]: produce((draft) => {
-        draft.historyRouter = []
+    [adminType.FIX_HEADER]: produce((draft, { payload: { fixHeader } }) => {
+        draft.fixHeader = fixHeader
     }),
+
 }, adminState, {
     prefix: 'admin',
     namespace: "_"

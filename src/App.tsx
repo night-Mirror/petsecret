@@ -3,7 +3,7 @@
  * @Author: night
  */
 import { useEffect, useState, } from 'react';
-import { useRoutes } from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
 import zh_CN from 'antd/lib/locale/zh_CN';
@@ -11,10 +11,11 @@ import ja_JP from 'antd/lib/locale/ja_JP';
 import en_US from 'antd/lib/locale/en_US';
 import { routes, } from './route';
 import transformRoutes from './route/router';
-import QueueAnim from 'rc-queue-anim';
 function App() {
   const lang = useSelector((store: Redux.Store) => store.app.lang)
   const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
+  const [locale, setLocale] = useState(zh_CN)
+  const elements = useRoutes(transformRoutes(routes))
   ConfigProvider.config({
     theme: {
       primaryColor: primaryColor,
@@ -24,8 +25,6 @@ function App() {
       // infoColor: '#1890ff',
     },
   });
-  const [locale, setLocale] = useState(zh_CN)
-  const elements = useRoutes(transformRoutes(routes))
   useEffect(() => {
     switch (lang) {
       case 'cn':

@@ -18,7 +18,7 @@ export const homeType = {
     SET_INPUT: "SET_INPUT"
 }
 export const adminType = {
-    ADD_ROUTER: "ADD_ROUTER",
-    REMOVE_ROUTER:"REMOVE_ROUTER",
-    CLEAR_ROUTER:"CLEAR_ROUTER"
+    SET_TAGS_VIEW: "SET_TAGS_VIEW",
+    SHOW_LOGO: "SHOW_LOGO",
+    FIX_HEADER: "FIX_HEADER",
 }

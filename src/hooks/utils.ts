@@ -28,19 +28,22 @@ export function useHistory() {
  * @param {*} rootUrl
  * @return {*}
  */
-
-export function useMeta(url: string, Routes: RouteItem[], rootUrl = ""): {} {
+export function useMeta(url: string, Routes: RouteItem[], rootUrl = ""): { fullPath?: string, [props: string]: any } {
     let route = {}
     for (let index = 0; index < Routes.length; index++) {
         const item = Routes[index];
         let key = item.path ? rootUrl + "/" + item.path : rootUrl
-        if (key == url) {
-            route = Routes[index].meta || {}
-            route['fullPath'] = url
-            break
-        }
-        if (url.startsWith(key) && Routes[index].children) {
-            return useMeta(url, Routes[index].children as RouteItem[], key)
+        if (url.startsWith(key)) {
+            if (key == url) {
+                route = Routes[index].meta || {}
+                route['fullPath'] = url
+                break
+            } else {
+                if (Routes[index].children) {
+                    return useMeta(url, Routes[index].children as RouteItem[], key)
+                }
+            }
+
         }
     }
     return route

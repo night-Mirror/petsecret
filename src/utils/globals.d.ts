@@ -23,11 +23,13 @@ declare global {
             primaryColor: string,
         }
         interface Admin {
-            historyRouter:string []
+            showTagsView: boolean,
+            showLogo: boolean,
+            fixHeader: boolean,
         }
         interface Store {
             app: App,
-            admin:Admin,
+            admin: Admin,
         }
     }
     type moment = Moment
@@ -39,8 +41,9 @@ declare global {
         appSetUserInfo: Function,
         appRemoveUserInfo: Function,
         appSetPrimaryColor: Function,
-        adminAddRouter: Function,
-        adminRemoveRouter: Function,
+        adminSetTagsView: Function,
+        adminShowLogo: Function,
+        adminFixHeader: Function,
         [propName: string]: any
     }
     interface RouteItem extends RouteObject {

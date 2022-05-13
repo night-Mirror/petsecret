@@ -11,8 +11,14 @@ let api = base.newBase
  * @return {*}
  */
 export function getUserInfo(params = {}) {
-    return request(`${api}/client`, {
-        method: "get",
-        params: params,
+    return new Promise<{ data: string }>((resolve, reject) => {
+        setTimeout(() => {
+            resolve({ data: '123' })
+        }, 2000);
     })
+
+    // return request(`${api}/client`, {
+    //     method: "get",
+    //     params: params,
+    // })
 }
