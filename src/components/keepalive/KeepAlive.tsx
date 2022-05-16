@@ -4,7 +4,7 @@
  * @Author: night
  */
 import ReactDOM from 'react-dom'
-import { equals, isNil, map, filter, not } from 'ramda'
+import { equals, isNil, map, filter } from 'ramda'
 import { useUpdate } from 'ahooks'
 import {
     JSXElementConstructor,
@@ -12,17 +12,14 @@ import {
     ReactElement,
     RefObject,
     useEffect,
-    useLayoutEffect,
     useRef,
     useState,
-    forwardRef,
-    LegacyRef,
     createContext,
 
 } from 'react'
 import { useLocation } from 'react-router'
 type Children = ReactElement<any, string | JSXElementConstructor<any>> | null
-const KeepAliveContext = createContext<Children[]>([])
+export const KeepAliveContext = createContext<(params: string, render: boolean) => void>(() => { })
 interface Props {
     activeName?: string
     include?: Array<string>
@@ -34,7 +31,7 @@ function KeepAlive({ children, exclude, include, maxLen = 5 }: Props,) {
     const containerRef = useRef<HTMLDivElement>(null)
     const components = useRef<Array<{ name: string; ele: Children }>>([])
     const { pathname } = useLocation()
-
+    const update = useUpdate()
     //如果没有配置include，exclude 则不缓存
     if (isNil(exclude) && isNil(include)) {
         components.current = [
@@ -68,17 +65,31 @@ function KeepAlive({ children, exclude, include, maxLen = 5 }: Props,) {
             ]
         }
     }
+    function destroy(params: string, render = false) {
+        components.current = filter(({ name }) => {
+            if (params === name) {
+                return false
+            }
+            return true
+        }, components.current)
+        if (render) {
+            update()
+        }
+    }
+
     return (
         <>
-            <div ref={containerRef} className="keep-alive" key={1} />
-            {map(
-                ({ name, ele }) => (
-                    <Component active={equals(name, pathname)} renderDiv={containerRef} name={name} key={name} >
-                        {ele}
-                    </Component>
-                ),
-                components.current
-            )}
+            <div ref={containerRef} className="keep-alive" />
+            <KeepAliveContext.Provider value={destroy}>
+                {map(
+                    ({ name, ele }) => (
+                        <Component active={equals(name, pathname)} renderDiv={containerRef} name={name} key={name} >
+                            {ele}
+                        </Component>
+                    ),
+                    components.current
+                )}
+            </KeepAliveContext.Provider >
         </>
     )
 }
@@ -93,19 +104,20 @@ interface ComponentProps {
 function Component({ active, children, name, renderDiv }: ComponentProps) {
     const [targetElement] = useState(() => document.createElement('div'))
     const activatedRef = useRef(false)
+
     activatedRef.current = activatedRef.current || active
     useEffect(() => {
         if (active) {// 渲染匹配的组件
-            renderDiv.current?.appendChild(targetElement)
-        } else {
-            try { // 移除不渲染的组件
-                renderDiv.current?.removeChild(targetElement)
-            } catch (e) { }
+            if (renderDiv.current?.firstChild) {
+                renderDiv.current?.replaceChild(targetElement, renderDiv.current?.firstChild)
+            } else {
+                renderDiv.current?.appendChild(targetElement)
+            }
         }
-    }, [active, name, renderDiv, targetElement])
+    }, [active])
     useEffect(() => {// 添加一个id 作为标识 并没有什么太多作用 
         targetElement.setAttribute('id', name)
-    }, [name, targetElement])
+    }, [name])
     // 把vnode 渲染到document.createElement('div') 里面
     return <>{activatedRef.current && ReactDOM.createPortal(children, targetElement)}</>
 }
