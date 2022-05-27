@@ -48,3 +48,19 @@ export function useMeta(url: string, Routes: RouteItem[], rootUrl = ""): { fullP
     }
     return route
 }
+/**
+ * @description: 根据id创建html节点，有就返回 
+ * @param {string} type
+ * @param {string} name
+ * @param {Function} callBack html节点添加位置
+ * @return {*}
+ */
+export function useElement(type: string, name: string, callBack: Function) {
+    let container = document.getElementById(name)
+    if (!container) {
+        container = document.createElement(type)
+        container.id = name
+        callBack(container)
+    }
+    return container
+}

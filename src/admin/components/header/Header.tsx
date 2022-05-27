@@ -19,6 +19,9 @@ import SvgIcon from "@/common/svgIcon"
 import adminRoutes from "@/route/admin"
 import classNames from "classnames"
 import Texty from 'rc-texty';
+import { changeLanguage } from "i18next"
+import { useTranslation } from "react-i18next"
+import { useDispatch } from "react-redux"
 const { Header } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
 let avatarMenus: MenuItem[] = [{
@@ -41,6 +44,20 @@ let avatarMenus: MenuItem[] = [{
     label: <Link to={"loginOut"}>退出登录</Link>,
     key: "loginOut",
 },]
+interface langMenus {
+    label: any,
+    key: string
+}
+let languageMenus: langMenus[] = [{
+    label: <span className={style.langItem}><SvgIcon iconClass='cn' style={{ fontSize: 18 }} />&nbsp;中文</span>,
+    key: "cn",
+}, {
+    label: <span className={style.langItem}><SvgIcon iconClass='us' style={{ fontSize: 18 }} />&nbsp;English</span>,
+    key: "en",
+}, {
+    label: <span className={style.langItem}><SvgIcon iconClass='jp' style={{ fontSize: 18 }} />&nbsp;日语</span>,
+    key: "jp",
+},]
 function itemRender(route: any, params: any, routes: string | any[], paths: any[]) {
     const last = routes.indexOf(route) === routes.length - 1;
     return last ? (
@@ -52,6 +69,16 @@ function itemRender(route: any, params: any, routes: string | any[], paths: any[
 export default function AdminHeader(props: { collapsed: boolean; setCollapsed: Function }) {
     const { collapsed, setCollapsed } = props
     const { pathname } = useLocation()
+    const { t, i18n } = useTranslation();
+    const dispatch = useDispatch()
+    function changeLang(value: langMenus | any) {
+        dispatch(actions.appSetLang(
+            {
+                lang: value.key
+            }
+        ))
+        i18n.changeLanguage(value.key)
+    }
     let routes: Route[] = useMemo(() => {
         let pathnameArr = pathname.split("/").filter(i => i).slice(1)
         let Routes = adminRoutes
@@ -105,7 +132,9 @@ export default function AdminHeader(props: { collapsed: boolean; setCollapsed: F
                 <SvgIcon iconClass='search' style={{ fontSize: 18 }} />
                 <SvgIcon iconClass='fullscreen' style={{ fontSize: 18 }} />
                 <SvgIcon iconClass='size' style={{ fontSize: 18 }} />
-                <SvgIcon iconClass='language' style={{ fontSize: 18 }} />
+                <Dropdown placement="bottom" arrow overlay={<Menu items={languageMenus} onClick={changeLang}></Menu>} >
+                    <span style={{ cursor: "pointer" }} ><SvgIcon iconClass='language' style={{ fontSize: 18 }} /></span>
+                </Dropdown>
                 <Dropdown placement="bottom" arrow overlay={<Menu items={avatarMenus}></Menu>} >
                     <Avatar icon={<img src={avatar} />} size={{ xs: 24, sm: 32, md: 40, lg: 40, xl: 40, xxl: 40 }} style={{ cursor: "pointer" }} />
                 </Dropdown>

@@ -4,7 +4,6 @@
  */
 import request, { axiosSession } from "../http"
 import base from "../base"
-let api = base.newBase
 /**
  * @description: 获取用户信息
  * @param {*} params

@@ -82,8 +82,7 @@ request.interceptors.response.use(
     (res) => {
         NProgress.done()
         if (res.status === 200) {
-            // res.data.cancel === "ok" 针对二维码获取
-            if (res.data.code === "OK") {
+            if (res.data.code == "1") {
                 return Promise.resolve(res.data)
             } else {
                 if (res.data.code == "ERR_GLOBAL_SESSION_EXPIRED") {

@@ -3,30 +3,30 @@
  * @Author: night
  */
 
-import { Button } from "antd"
-import styles from "./style/index.module.less"
-import SvgIcon from "../../common/svgIcon/index"
-import { useTranslation } from 'react-i18next'
-import { useParams } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import actions from "@/redux/actions"
-export default function ImgCard() {
-    const params = useParams()
-    const { t, i18n } = useTranslation();
-    const dispatch = useDispatch()
-    function change() {
-        dispatch(actions.appSetLang(
-            {
-                lang: 'en'
-            }
-        ))
-        i18n.changeLanguage('en')
-    }
-    return (
-        <div className={styles.wrap}>
 
-            <h2>Invoice: {params.invoiceId}</h2>
-            <Button type="primary" onClick={change}> 切换语言</Button> <span className="wrap1">{t('main_name', { msg: 'test' })}<SvgIcon iconClass="cn" /></span>
-        </div>
+import styles from "./style/index.module.less"
+import { useTranslation } from 'react-i18next'
+import ReactDOM from "react-dom"
+import { useEffect, useRef } from "react"
+export default function ImgCard() {
+    const { t, i18n } = useTranslation();
+    let target = useRef<HTMLElement>()
+    useEffect(() => {
+        let container = document.getElementById("test")
+        if (!container) {
+            container = document.createElement("div")
+            container.id = "test"
+        }
+        target.current = container
+        document.body.appendChild(container)
+
+    }, [])
+    return (
+        <>{target.current &&
+            ReactDOM.createPortal(<div className={styles.wrap}>
+              <span className="wrap1">{t('main_name', { msg: 'test' })}</span>
+            </div>, target.current)
+        }</>
+
     )
 }

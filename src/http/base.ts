@@ -2,10 +2,10 @@
  * @LastEditors: night
  * @Author: night
  */
-let isPro = process.env.NODE_ENV === "production" ? "" : "/dev"
+let isPro = process.env.NODE_ENV === "production" ? "" : "/mock"
 const baseURLs = {
-    newBase: isPro + "/v3/api",
-    analysisUrl: isPro + '/v3/api/review-analysis',
-    relationUrl: isPro + '/v3/api/relation'
+    base: isPro + "/",
+    articleUrl: isPro + '/article',
+
 }
 export default baseURLs
