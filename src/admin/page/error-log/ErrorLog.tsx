@@ -6,7 +6,7 @@
 
 import SvgIcon from "@/common/svgIcon";
 import { Alert, Button } from "antd";
-import QueueAnim from "rc-queue-anim";
+;
 import { useState } from "react";
 import ErrorTest from "./Error";
 
@@ -21,14 +21,14 @@ export default function ErrorLog() {
         4.它自身抛出来的错误（并非它的子组件）<br />
     </span>
     return (
-        <QueueAnim>
+        <div>
             <div key={1}>
                 <Alert message={message} type="success"></Alert>
                 <br />
                 <Button icon={<SvgIcon iconClass="bug" />} type="primary" onClick={() => { setBug(true) }}>异常抛出</Button>
                 {bug ? <ErrorTest /> : ''}
             </div>
-        </QueueAnim>
+        </div>
 
     )
 }

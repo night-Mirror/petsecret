@@ -3,7 +3,7 @@
  * @LastEditors: night
  * @Author: night
  */
-import QueueAnim from "rc-queue-anim"
+
 import SvgIcon from "@/common/svgIcon"
 import style from "./Icon.module.less"
 import { Tooltip } from 'antd';
@@ -18,7 +18,7 @@ const modules = svgs.keys().reduce((modules: string[], modulePath: string) => {
 }, [])
 export default function Icon() {
     return (
-            <QueueAnim>
+            <div>
                 <div className={style.wrap} key={1}>
                     {modules.map(item =>
                         <span className={style.item} key={item}>
@@ -32,6 +32,6 @@ export default function Icon() {
                     )
                     }
                 </div >
-            </QueueAnim>
+            </div>
     )
 }

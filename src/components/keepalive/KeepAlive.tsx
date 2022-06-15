@@ -115,10 +115,9 @@ function Component({ active, children, name, renderDiv }: ComponentProps) {
             }
         }
     }, [active])
-    useEffect(() => {// 添加一个id 作为标识 并没有什么太多作用 
+    useEffect(() => {
         targetElement.setAttribute('id', name)
     }, [name])
-    // 把vnode 渲染到document.createElement('div') 里面
     return <>{activatedRef.current && ReactDOM.createPortal(children, targetElement)}</>
 }
 export const KeepAliveComponent = memo(Component)

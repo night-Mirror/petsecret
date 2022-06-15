@@ -5,14 +5,14 @@
  */
 import { Button, Input, Space, message } from "antd";
 import { CheckCircleOutlined } from '@ant-design/icons';
-import QueueAnim from "rc-queue-anim"
+
 import { useState } from "react";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 export default function Cipboard() {
     const [finish, setFinish] = useState(false)
     const [input, setInput] = useState("copy 文本")
     return (
-        <QueueAnim>
+        <div>
             <div key={1}>
                 <Space direction="vertical">
                     <Input.Group >
@@ -29,7 +29,7 @@ export default function Cipboard() {
                     </Input.Group>
                 </Space>
             </div>
-        </QueueAnim >
+        </div >
     )
 }
 
