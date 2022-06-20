@@ -4,7 +4,7 @@
  * @Author: night
  */
 import ReactDOM from 'react-dom'
-import { equals, isNil, map, filter } from 'ramda'
+import { equals, isNil, map, filter,  propEq, findIndex } from 'ramda'
 import { useUpdate } from 'ahooks'
 import {
     JSXElementConstructor,
@@ -19,7 +19,11 @@ import {
 } from 'react'
 import { useLocation } from 'react-router'
 type Children = ReactElement<any, string | JSXElementConstructor<any>> | null
-export const KeepAliveContext = createContext<(params: string, render: boolean) => void>(() => { })
+interface context {
+    destroy: (params: string, render?: boolean) => void,
+    isActive: boolean
+}
+export const KeepAliveContext = createContext<context>({ destroy: () => { }, isActive: false })
 interface Props {
     activeName?: string
     include?: Array<string>
@@ -32,6 +36,7 @@ function KeepAlive({ children, exclude, include, maxLen = 5 }: Props,) {
     const components = useRef<Array<{ name: string; ele: Children }>>([])
     const { pathname } = useLocation()
     const update = useUpdate()
+    const isActive = findIndex(propEq('name', pathname))(components.current)
     //如果没有配置include，exclude 则不缓存
     if (isNil(exclude) && isNil(include)) {
         components.current = [
@@ -65,6 +70,7 @@ function KeepAlive({ children, exclude, include, maxLen = 5 }: Props,) {
             ]
         }
     }
+
     function destroy(params: string, render = false) {
         components.current = filter(({ name }) => {
             if (params === name) {
@@ -76,11 +82,14 @@ function KeepAlive({ children, exclude, include, maxLen = 5 }: Props,) {
             update()
         }
     }
-
+    const context = {
+        destroy,
+        isActive: isActive !== -1
+    }
     return (
         <>
             <div ref={containerRef} className="keep-alive" />
-            <KeepAliveContext.Provider value={destroy}>
+            <KeepAliveContext.Provider value={context}>
                 {map(
                     ({ name, ele }) => (
                         <Component active={equals(name, pathname)} renderDiv={containerRef} name={name} key={name} >

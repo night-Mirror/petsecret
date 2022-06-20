@@ -94,11 +94,13 @@ request.interceptors.response.use(
                 } else if (res.data.code == "ERR_LOGIN_ACCOUNT_INCONSISTENT") {
                     return Promise.resolve(res.data)
                 } else {
+                    message.destroy()
                     message.error(res.data.message)
                 }
                 return Promise.resolve(res.data)
             }
         } else {
+            message.destroy()
             errorTip(res.status)
             return Promise.reject(res.data)
         }
@@ -106,13 +108,21 @@ request.interceptors.response.use(
     },
     error => {
         NProgress.done()
-        const { response } = error
-        if (response) {
-            errorTip(error.response.status)
-            return Promise.reject(response);
-        } else {
-            return Promise.reject(error)
-            // Message.error("请求超时")
+        try {
+            const { response } = error
+            if (response) {
+                message.destroy()
+                errorTip(error.response.status)
+                return Promise.reject(response);
+            } else {
+                if (error?.message?.includes('timeout')) {
+                    message.error("请求超时,请刷新")
+                    return Promise.reject(error)
+                } else {
+                    return Promise.reject(error)
+                }
+            }
+        } catch (err) {
         }
     }
 )

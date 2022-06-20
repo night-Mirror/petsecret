@@ -3,7 +3,7 @@
  * @Author: night
  */
 import { useEffect, useState, } from 'react';
-import { useLocation, useRoutes } from "react-router-dom";
+import {  useRoutes } from "react-router-dom";
 import { ConfigProvider } from 'antd';
 import { useSelector } from 'react-redux';
 import zh_CN from 'antd/lib/locale/zh_CN';

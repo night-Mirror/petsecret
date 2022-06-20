@@ -3,18 +3,17 @@
  * @LastEditors: night
  * @Author: night
  */
-import { getList } from "@/http/api/article"
-import { useRequest } from "ahooks"
-import { Button, Input } from "antd"
 
-import { useEffect, useState } from "react"
+import { Button, Input } from "antd"
+import { KeepAliveContext } from "@/components/keepalive/KeepAlive";
+import { useEffect, useState, useContext, } from "react"
 export default function Zip() {
-    const { loading, data, error } = useRequest(getList)
-    console.log(1)
     let [name, setName] = useState("")
-    function download() {
-        console.log(1)
-    }
+    const { destroy, isActive } = useContext(KeepAliveContext)
+    const download = () => { }
+    useEffect(() => {
+        console.log('页面激活', isActive)
+    }, [isActive])
     return (
         <div>
             <Input.Group>
