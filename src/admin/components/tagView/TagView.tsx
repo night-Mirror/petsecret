@@ -4,7 +4,7 @@
  * @Author: night
  */
 
-import SvgIcon from "@/common/svgIcon"
+import SvgIcon from "@/components/svgIcon"
 import { useMeta } from "@/hooks/utils"
 import { TweenOneGroup } from 'rc-tween-one';
 import adminRoutes from "@/route/admin"

@@ -4,7 +4,7 @@
  * @Author: night
  */
 
-import SvgIcon from "@/common/svgIcon";
+import SvgIcon from "@/components/svgIcon";
 import { Alert, Button } from "antd";
 ;
 import { useState } from "react";

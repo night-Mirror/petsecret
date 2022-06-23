@@ -15,7 +15,7 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
 } from '@ant-design/icons';
-import SvgIcon from "@/common/svgIcon"
+import SvgIcon from "@/components/svgIcon"
 import adminRoutes from "@/route/admin"
 import classNames from "classnames"
 import Texty from 'rc-texty';

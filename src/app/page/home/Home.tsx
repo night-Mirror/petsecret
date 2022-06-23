@@ -1,24 +1,16 @@
-
 /*
  * @LastEditors: night
  * @Author: night
  */
+import style from "./Home.module.less";
+import Top from "./components/Top";
+import Content from "./components/Content";
 
-import { useHistory } from "@/hooks/utils";
-import { useState } from "react";
-import { Outlet, useSearchParams, useNavigate, Link } from "react-router-dom";
 export default function Home() {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [count, setCount] = useState(0)
-    const Navigate = useNavigate()
-    const click = () => {
-        Navigate('/mine', { state: { query: 132 } })
-    }
-    console.log(2)
-    return (
-        <div  >
-            <div onClick={click}> home</div>
-            {/* <Outlet /> */}
-        </div>
-    );
+  return (
+    <div className={style.home}>
+      <Top />
+      <Content />
+    </div>
+  );
 }

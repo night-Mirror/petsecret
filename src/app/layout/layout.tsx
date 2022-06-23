@@ -7,8 +7,9 @@ import style from "./layout.module.less"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, Outlet, useNavigate } from "react-router-dom"
 import { useMemo, memo, useState, useEffect } from "react"
-import Header from "@/common/header/Header"
-import Footer from "@/common/footer/Footer"
+import Header from "../components/header/Header"
+import Footer from "../components/footer/Footer"
+
 function Layout() {
     const dispatch = useDispatch()
     return (
@@ -21,4 +22,4 @@ function Layout() {
         </section>
     )
 }
-export default memo(Layout)
+export default Layout

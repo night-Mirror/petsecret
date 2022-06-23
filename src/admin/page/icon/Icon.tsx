@@ -4,7 +4,7 @@
  * @Author: night
  */
 
-import SvgIcon from "@/common/svgIcon"
+import SvgIcon from "@/components/svgIcon"
 import style from "./Icon.module.less"
 import { Tooltip } from 'antd';
 

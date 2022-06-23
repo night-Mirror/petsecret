@@ -8,9 +8,9 @@ import { Link, Outlet, useLocation, useOutlet } from "react-router-dom"
 import { memo, useState, } from "react"
 import { Layout, Menu, MenuProps, Affix } from 'antd';
 import React from "react"
-import SvgIcon from "@/common/svgIcon"
+import SvgIcon from "@/components/svgIcon"
 import adminRoutes from "@/route/admin"
-import ErrorBoundary from "@/common/errorBoundary/ErrorBoundary"
+import ErrorBoundary from "@/components/errorBoundary/ErrorBoundary"
 import { Scrollbars } from 'react-custom-scrollbars';
 import System from "../components/system/System"
 import AdminHeader from "../components/header/Header"

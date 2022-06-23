@@ -5,7 +5,7 @@
  */
 
 import { Button } from "antd"
-import SvgIcon from "../../common/svgIcon/index"
+import SvgIcon from "@/components/svgIcon/index"
 import { useTranslation } from 'react-i18next'
 import { useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"

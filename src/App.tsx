@@ -47,7 +47,7 @@ function App() {
     <>
       <ConfigProvider locale={locale}>
         {elements}
-        <ModulesTsx/>
+        {/* <ModulesTsx/> */}
       </ConfigProvider>
     </>
 
