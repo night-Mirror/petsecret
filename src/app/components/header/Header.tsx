@@ -76,9 +76,9 @@ export default function Header() {
   return (
     <header className={style.header}>
       <div className={style.left}>
-        <a href="/">
+        <Link to="/">
           <SvgIcon iconClass="logo" className="logo" />
-        </a>
+        </Link>
         <div className={style.menu}>
           <Menu
             onClick={onClick}

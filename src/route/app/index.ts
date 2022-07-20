@@ -9,17 +9,17 @@ const appRoutes: RouteItem[] = [
         index: true,
         component: () => import('@/app/page/home/Home'),
         meta: {
-            title: '首页',
+            title: '宠物星球',
         },
 
     },
-    // {
-    //     path: "/mine",
-    //     component: () => import('@/app/page/mine/Mine'),
-    //     meta: {
-    //         title: "个人中心",
-    //         // needLogin: true
-    //     }
-    // }
+    {
+        path: "/profile",
+        component: () => import('@/app/page/profile/Profile'),
+        meta: {
+            title: "个人中心",
+            // needLogin: true
+        }
+    }
 ]
 export default appRoutes
