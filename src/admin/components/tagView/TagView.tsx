@@ -19,20 +19,17 @@ type tag = Required<ReturnType<typeof useMeta>>
 
 function TagView() {
     const primaryColor = useSelector((store: Redux.Store) => store.app.primaryColor)
-    let [tags, setTags] = useState([] as tag[])
-    let [urls, setUrls] = useState([] as string[])
+    const [tags, setTags] = useState([] as tag[])
+    const [urls, setUrls] = useState([] as string[])
     const { pathname } = useLocation()
     function close(params: string) {
         setTags(tags.filter(item => item.fullPath !== params))
-        urls = urls.filter(item => item !== params)
-        setUrls(urls)
+        setUrls(urls.filter(item => item !== params))
     }
     useMemo(() => {
-        urls.push("/admin/dashboard")
-        urls.push(pathname)
-        urls = Array.from(new Set(urls))
-        setUrls(urls)
-        let tag = urls.map(item => {
+        let arr = Array.from(new Set([...urls, "/admin/dashboard", pathname]))
+        setUrls(arr)
+        let tag = arr.map(item => {
             return useMeta(item, adminRoutes, "/admin")
         }).filter(item => item.menu)
         setTags(tag as tag[])
